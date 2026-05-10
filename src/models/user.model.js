@@ -52,10 +52,9 @@ const userSchema = new Schema(
 );
 
 // hash password before saving
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next(); // check whether password is modified or not
+userSchema.pre("save", async function () {
+  if (!this.isModified("password")) return; // check whether password is modified or not
   this.password = await bcrypt.hash(this.password, 10); // 10 times more secure
-  next();
 });
 //Arrow functions do not have their own this.
 
